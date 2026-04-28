@@ -1,0 +1,289 @@
+export const personalInfo = {
+  name: "Khoironi",
+  fullName: "Muhammad Khoironi",
+  title: "Full-Stack Developer",
+  subtitle: "Building digital products that drive results",
+  email: "hello@khoironi.dev",
+  location: "Jakarta, Indonesia",
+  avatar: "/avatar.png",
+  resume: "/resume.pdf",
+  availability: "available" as const,
+  availabilityText: "Available for projects",
+};
+
+export const navLinks = [
+  { id: 1, url: "#home", label: "Home" },
+  { id: 2, url: "#about", label: "About" },
+  { id: 3, url: "#skills", label: "Skills" },
+  { id: 4, url: "#projects", label: "Projects" },
+  { id: 5, url: "#services", label: "Services" },
+  { id: 6, url: "#experience", label: "Experience" },
+  { id: 7, url: "#testimonials", label: "Testimonials" },
+  { id: 8, url: "#contact", label: "Contact" },
+];
+
+export const socialLinks = [
+  { id: 1, name: "GitHub", url: "https://github.com/khoironi", icon: "github" },
+  { id: 2, name: "LinkedIn", url: "https://linkedin.com/in/khoironi", icon: "linkedin" },
+  { id: 3, name: "Twitter", url: "https://twitter.com/khoironi", icon: "twitter" },
+  { id: 4, name: "Instagram", url: "https://instagram.com/khoironi", icon: "instagram" },
+];
+
+export const heroStats = [
+  { id: 1, value: "5+", label: "Years Experience" },
+  { id: 2, value: "50+", label: "Projects Completed" },
+  { id: 3, value: "30+", label: "Happy Clients" },
+];
+
+export const skills = [
+  { name: "React", category: "frontend", level: 95 },
+  { name: "Next.js", category: "frontend", level: 90 },
+  { name: "TypeScript", category: "frontend", level: 90 },
+  { name: "Tailwind CSS", category: "frontend", level: 95 },
+  { name: "Vue.js", category: "frontend", level: 80 },
+  { name: "Node.js", category: "backend", level: 85 },
+  { name: "Express", category: "backend", level: 80 },
+  { name: "PostgreSQL", category: "backend", level: 75 },
+  { name: "MongoDB", category: "backend", level: 80 },
+  { name: "Prisma", category: "backend", level: 85 },
+  { name: "REST API", category: "backend", level: 90 },
+  { name: "GraphQL", category: "backend", level: 75 },
+  { name: "Docker", category: "devops", level: 70 },
+  { name: "AWS", category: "devops", level: 65 },
+  { name: "Git", category: "devops", level: 85 },
+];
+
+export const projects = [
+  {
+    id: 1,
+    title: "E-Commerce Platform",
+    description: "A full-featured online store with payment integration, inventory management, and admin dashboard.",
+    image: "/projects/ecommerce.jpg",
+    tags: ["Next.js", "TypeScript", "Stripe", "PostgreSQL"],
+    liveUrl: "https://ecommerce-demo.com",
+    GitHubUrl: "https://github.com/khoironi/ecommerce",
+    category: "freelance",
+    metrics: { value: "40%", label: "Revenue Increase" },
+  },
+  {
+    id: 2,
+    title: "SaaS Dashboard",
+    description: "Analytics dashboard with real-time data visualization, team collaboration, and custom reporting.",
+    image: "/projects/dashboard.jpg",
+    tags: ["React", "D3.js", "Firebase", "Tailwind"],
+    liveUrl: "https://saas-dashboard-demo.com",
+    GitHubUrl: "https://github.com/khoironi/dashboard",
+    category: "product",
+    metrics: { value: "3x", label: "Faster Decisions" },
+  },
+  {
+    id: 3,
+    title: "Food Delivery App",
+    description: "Mobile-first food ordering platform with real-time tracking and restaurant management.",
+    image: "/projects/fooddelivery.jpg",
+    tags: ["Next.js", "Socket.io", "MongoDB", "Redis"],
+    liveUrl: "https://food delivery-demo.com",
+    GitHubUrl: "https://github.com/khoironi/fooddelivery",
+    category: "freelance",
+    metrics: { value: "50%", label: "Faster Orders" },
+  },
+  {
+    id: 4,
+    title: "Task Management App",
+    description: "Collaborative project management tool with kanban boards, gantt charts, and team chat.",
+    image: "/projects/taskapp.jpg",
+    tags: ["Vue.js", "Express", "PostgreSQL", "WebSocket"],
+    liveUrl: "https://taskapp-demo.com",
+    GitHubUrl: "https://github.com/khoironi/taskapp",
+    category: "product",
+    metrics: { value: "60%", label: "Productivity Boost" },
+  },
+  {
+    id: 5,
+    title: "Portfolio Generator",
+    description: "AI-powered portfolio builder that creates stunning developer portfolios in minutes.",
+    image: "/projects/portfoliogen.jpg",
+    tags: ["Next.js", "OpenAI", "Vercel", "Supabase"],
+    liveUrl: "https://portfoliogen.dev",
+    GitHubUrl: "https://github.com/khoironi/portfoliogen",
+    category: "product",
+    metrics: { value: "1000+", label: "Users Created" },
+  },
+  {
+    id: 6,
+    title: "Real Estate Platform",
+    description: "Property listing platform with virtual tours, agent portal, and mortgage calculator.",
+    image: "/projects/realestate.jpg",
+    tags: ["Next.js", "Three.js", "Prisma", "AWS"],
+    liveUrl: "https://realestate-demo.com",
+    GitHubUrl: "https://github.com/khoironi/realestate",
+    category: "freelance",
+    metrics: { value: "30%", label: "More Leads" },
+  },
+];
+
+export const services = [
+  {
+    id: 1,
+    title: "Web Development",
+    description: "Custom web applications built with modern technologies like Next.js, React, and Node.js.",
+    price: "Starting $500",
+    features: [
+      "Custom web application",
+      "Responsive design",
+      "API integration",
+      "Database setup",
+      "3 months support",
+    ],
+    icon: "code",
+  },
+  {
+    id: 2,
+    title: "E-Commerce Solutions",
+    description: "Full online store setup with payment processing, inventory management, and marketing tools.",
+    price: "Starting $1,500",
+    features: [
+      "Online store setup",
+      "Payment integration",
+      "Product management",
+      "Order tracking",
+      "6 months support",
+    ],
+    icon: "shopping-cart",
+  },
+  {
+    id: 3,
+    title: "API Development",
+    description: "RESTful or GraphQL APIs built for your mobile apps, web apps, or third-party integrations.",
+    price: "Starting $300",
+    features: [
+      "REST/GraphQL API",
+      "Authentication",
+      "Documentation",
+      "Rate limiting",
+      "2 months support",
+    ],
+    icon: "server",
+  },
+  {
+    id: 4,
+    title: "Technical Consulting",
+    description: "Expert advice on architecture, technology choices, performance optimization, and scaling.",
+    price: "Starting $100/hr",
+    features: [
+      "Architecture review",
+      "Tech recommendations",
+      "Code review",
+      "Performance audit",
+      "Ongoing support",
+    ],
+    icon: "consulting",
+  },
+];
+
+export const experience = [
+  {
+    id: 1,
+    company: "Tech Innovate",
+    role: "Senior Full-Stack Developer",
+    period: "2022 - Present",
+    description: "Leading development of enterprise SaaS products and mentoring junior developers.",
+    technologies: ["Next.js", "TypeScript", "PostgreSQL", "AWS"],
+  },
+  {
+    id: 2,
+    company: "Digital Agency",
+    role: "Full-Stack Developer",
+    period: "2020 - 2022",
+    description: "Built custom web solutions for diverse clients across multiple industries.",
+    technologies: ["React", "Node.js", "MongoDB", "Docker"],
+  },
+  {
+    id: 3,
+    company: "StartupXYZ",
+    role: "Frontend Developer",
+    period: "2019 - 2020",
+    description: "Developed customer-facing features and improved UI/UX for the product.",
+    technologies: ["React", "Redux", "Tailwind CSS", "Firebase"],
+  },
+  {
+    id: 4,
+    company: "Freelance",
+    role: "Freelance Developer",
+    period: "2018 - 2019",
+    description: "Delivered web projects for small businesses and startups.",
+    technologies: ["HTML", "CSS", "JavaScript", "WordPress"],
+  },
+];
+
+export const testimonials = [
+  {
+    id: 1,
+    name: "Sarah Chen",
+    role: "CEO, TechStartup",
+    company: "TechStartup Inc.",
+    content: "Khoironi delivered an exceptional e-commerce platform that increased our revenue by 40%. His attention to detail and communication throughout the project was outstanding.",
+    avatar: "/testimonials/sarah.jpg",
+  },
+  {
+    id: 2,
+    name: "Michael Rodriguez",
+    role: "Product Manager",
+    company: "InnovateTech",
+    content: "Working with Khoironi was a great experience. He understood our requirements perfectly and delivered before the deadline. The dashboard he built transformed how we make decisions.",
+    avatar: "/testimonials/michael.jpg",
+  },
+  {
+    id: 3,
+    name: "Emily Watson",
+    role: "Founder",
+    company: "FoodieApp",
+    content: "Khoironi built our food delivery app from scratch. The real-time tracking feature he implemented exceeded our expectations. Highly recommended!",
+    avatar: "/testimonials/emily.jpg",
+  },
+  {
+    id: 4,
+    name: "David Kim",
+    role: "CTO",
+    company: "GrowthLabs",
+    content: "His technical expertise and clean code quality made our collaboration seamless. He also provided valuable suggestions that improved our product.",
+    avatar: "/testimonials/david.jpg",
+  },
+];
+
+export const mediumArticles = [
+  {
+    id: 1,
+    title: "How to Build a Modern Web Application with Next.js",
+    description: "A comprehensive guide to building scalable web apps using Next.js 14 and modern technologies.",
+    date: "Jan 15, 2024",
+    readTime: "8 min read",
+    url: "https://medium.com/@khoironi/nextjs-guide",
+    category: "Development",
+  },
+  {
+    id: 2,
+    title: "Understanding TypeScript Generics",
+    description: "Deep dive into TypeScript generics and how to use them effectively in your code.",
+    date: "Dec 20, 2023",
+    readTime: "6 min read",
+    url: "https://medium.com/@khoironi/typescript-generics",
+    category: "TypeScript",
+  },
+  {
+    id: 3,
+    title: "Best Practices for React Performance",
+    description: "Tips and tricks to optimize your React applications for better performance.",
+    date: "Nov 10, 2023",
+    readTime: "5 min read",
+    url: "https://medium.com/@khoironi/react-performance",
+    category: "React",
+  },
+];
+
+export const contactInfo = {
+  email: "hello@khoironi.dev",
+  phone: "+62 812 3456 7890",
+  location: "Jakarta, Indonesia",
+  availability: "Usually responds within 24 hours",
+};
