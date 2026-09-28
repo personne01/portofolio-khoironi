@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
 import { FaArrowRight, FaDownload, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 import { useTheme } from "@/context/ThemeContext";
 
 const Hero = () => {
@@ -91,14 +92,18 @@ const Hero = () => {
           >
             <div className="relative">
               <div className="w-72 h-72 md:w-96 md:h-96 rounded-full bg-gradient-to-br from-blue-600/30 to-purple-600/30 flex items-center justify-center">
-                <div className={`w-64 h-64 md:w-88 md:h-88 rounded-full border flex items-center justify-center ${isDark
+                <div className={`relative overflow-hidden w-64 h-64 md:w-88 md:h-88 rounded-full border flex items-center justify-center ${isDark
                     ? "bg-[var(--background)] border-white/10"
                     : "bg-white border-gray-200"
                   }`}>
-                  <span className={`text-6xl md:text-8xl font-bold ${isDark ? "text-white" : "text-[var(--foreground)]"
-                    }`}>
-                    {personalInfo.name.charAt(0)}
-                  </span>
+                  <Image
+                    src="/photos/khoironi-photo.jpeg"
+                    alt={`Portrait of ${personalInfo.name}, ${personalInfo.title}`}
+                    fill
+                    preload
+                    sizes="(min-width: 768px) 352px, 256px"
+                    className="rounded-full object-cover object-[center_70%]"
+                  />
                 </div>
               </div>
               <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full bg-blue-600/20 border border-blue-600/30 flex items-center justify-center animate-pulse">

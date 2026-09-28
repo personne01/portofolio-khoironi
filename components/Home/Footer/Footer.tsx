@@ -3,7 +3,7 @@
 import { navLinks, personalInfo, socialLinks } from "@/constant/portfolio";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaMedium } from "react-icons/fa";
 import { useTheme } from "@/context/ThemeContext";
 
 const Footer = () => {
@@ -31,53 +31,41 @@ const Footer = () => {
             </p>
             <div className="flex gap-4">
               <a
-                href="https://github.com/khoironi"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
-                  isDark ? "bg-white/10 hover:bg-blue-600/30" : "bg-gray-200 hover:bg-gray-300"
-                }`}
-              >
-                <FaGithub className={`w-4 h-4 ${
-                  isDark ? "text-gray-300" : "text-gray-700"
-                }`} />
-              </a>
-              <a
-                href="https://linkedin.com/in/khoironi"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
-                  isDark ? "bg-white/10 hover:bg-blue-600/30" : "bg-gray-200 hover:bg-gray-300"
-                }`}
-              >
-                <FaLinkedin className={`w-4 h-4 ${
-                  isDark ? "text-gray-300" : "text-gray-700"
-                }`} />
-              </a>
-              <a
-                href="https://twitter.com/khoironi"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
-                  isDark ? "bg-white/10 hover:bg-blue-600/30" : "bg-gray-200 hover:bg-gray-300"
-                }`}
-              >
-                <FaTwitter className={`w-4 h-4 ${
-                  isDark ? "text-gray-300" : "text-gray-700"
-                }`} />
-              </a>
-              <a
-                href="https://instagram.com/khoironi"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
-                  isDark ? "bg-white/10 hover:bg-blue-600/30" : "bg-gray-200 hover:bg-gray-300"
-                }`}
-              >
-                <FaInstagram className={`w-4 h-4 ${
-                  isDark ? "text-gray-300" : "text-gray-700"
-                }`} />
-              </a>
+                    href="https://github.com/personne01"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+                      isDark ? "bg-white/10 hover:bg-blue-600/30" : "bg-gray-100 hover:bg-gray-200"
+                    }`}
+                  >
+                    <FaGithub className={`w-5 h-5 ${
+                      isDark ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-black"
+                    }`} />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/m-khoironi-14b9221b0/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+                      isDark ? "bg-white/10 hover:bg-blue-600/30" : "bg-gray-100 hover:bg-gray-200"
+                    }`}
+                  >
+                    <FaLinkedin className={`w-5 h-5 ${
+                      isDark ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-black"
+                    }`} />
+                  </a>
+                  <a
+                    href="https://medium.com/@onimaksut01"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+                      isDark ? "bg-white/10 hover:bg-blue-600/30" : "bg-gray-100 hover:bg-gray-200"
+                    }`}
+                  >
+                    <FaMedium className={`w-5 h-5 ${
+                      isDark ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-black"
+                    }`} />
+                  </a>
             </div>
           </div>
 

@@ -1,12 +1,23 @@
+const calculateExperience = (startDate: Date): string => {
+  const today = new Date();
+
+  const years =
+    today.getFullYear() -
+    startDate.getFullYear() -
+    (today.getMonth() < startDate.getMonth() ? 1 : 0);
+
+  return `${years}+`;
+};
+
 export const personalInfo = {
   name: "Khoironi",
   fullName: "Muhammad Khoironi",
   title: "Full-Stack Developer",
   subtitle: "Building digital products that drive results",
-  email: "hello@khoironi.dev",
+  email: "onimaksut01@gmail.com",
   location: "Jakarta, Indonesia",
   avatar: "/avatar.png",
-  resume: "/resume.pdf",
+  resume: "https://drive.google.com/file/d/1U3qncYgGxw8G2GusUp2ts6A4QfbdrQfE/view?usp=sharing",
   availability: "available" as const,
   availabilityText: "Available for projects",
 };
@@ -30,27 +41,28 @@ export const socialLinks = [
 ];
 
 export const heroStats = [
-  { id: 1, value: "5+", label: "Years Experience" },
-  { id: 2, value: "50+", label: "Projects Completed" },
-  { id: 3, value: "30+", label: "Happy Clients" },
+  { id: 1, value: calculateExperience(new Date(2022, 9, 1)), label: "Years Experience" },
+  // { id: 2, value: "50+", label: "Projects Completed" },
+  // { id: 3, value: "30+", label: "Happy Clients" },
 ];
 
 export const skills = [
-  { name: "React", category: "frontend", level: 95 },
-  { name: "Next.js", category: "frontend", level: 90 },
-  { name: "TypeScript", category: "frontend", level: 90 },
-  { name: "Tailwind CSS", category: "frontend", level: 95 },
-  { name: "Vue.js", category: "frontend", level: 80 },
-  { name: "Node.js", category: "backend", level: 85 },
+  { name: "React", category: "frontend", level: 75 },
+  { name: "Angular.js", category: "frontend", level: 75 },
+  { name: "Next.js", category: "frontend", level: 70 },
+  { name: "Java Spring Boot", category: "backend", level: 85 },
+  { name: "Node.js", category: "backend", level: 65 },
+  { name: "Go", category: "backend", level: 55 },
+  { name: "PHP", category: "backend", level: 60 },
   { name: "Express", category: "backend", level: 80 },
-  { name: "PostgreSQL", category: "backend", level: 75 },
+  { name: "PostgreSQL", category: "backend", level: 85 },
   { name: "MongoDB", category: "backend", level: 80 },
-  { name: "Prisma", category: "backend", level: 85 },
+  { name: "MySql", category: "backend", level: 80 },
+  { name: "Redis", category: "backend", level: 80 },
   { name: "REST API", category: "backend", level: 90 },
-  { name: "GraphQL", category: "backend", level: 75 },
-  { name: "Docker", category: "devops", level: 70 },
-  { name: "AWS", category: "devops", level: 65 },
-  { name: "Git", category: "devops", level: 85 },
+  { name: "GraphQL", category: "backend", level: 80 },
+  { name: "GCP", category: "devops", level: 70 },
+  { name: "AWS", category: "devops", level: 65 }
 ];
 
 export const projects = [
@@ -184,36 +196,26 @@ export const services = [
 export const experience = [
   {
     id: 1,
-    company: "Tech Innovate",
-    role: "Senior Full-Stack Developer",
-    period: "2022 - Present",
-    description: "Leading development of enterprise SaaS products and mentoring junior developers.",
-    technologies: ["Next.js", "TypeScript", "PostgreSQL", "AWS"],
+    company: "PT. Astra Digital Artha (AstraPay)",
+    role: "Product Developer | Full-Stack Developer",
+    period: "Mar 2023 - Present",
+    description: "Develop and maintain backend services for AstraPay’s PPOB ecosystem using Java, Spring Boot, REST APIs, PostgreSQL, and microservices. "+
+    "Build integrations with external partners and internal services for inquiry, payment, transaction status, and updates. "+
+    "Develop automated reconciliation and settlement processes using Spring Batch to match transactions across AstraPay, partners, and internal systems. "+
+    "Implement scheduled processes for product availability, automatic partner switching, and product activation/deactivation. Build monitoring solutions for transaction issues, "+
+    "price/status discrepancies, product availability, and partner failures. Collaborate with Product, Finance, Operations, QA, Infrastructure, and external partners across SIT, UAT, deployment, "+
+    "and production monitoring. Troubleshoot production issues involving API timeouts, database connection pools, high traffic, and service performance, including circuit breaker implementation. "+
+    "Follow engineering practices including TDD, unit testing, documentation, Agile, and code conventions.",
+    technologies: ["Java", "Spring Boot", "Kotlin Android", "Angular.js", "TypeScript", "PostgreSQL", "Redis", "Datadog" ,"GCP", "Jira", "Confluence"],
   },
   {
     id: 2,
-    company: "Digital Agency",
-    role: "Full-Stack Developer",
-    period: "2020 - 2022",
-    description: "Built custom web solutions for diverse clients across multiple industries.",
-    technologies: ["React", "Node.js", "MongoDB", "Docker"],
-  },
-  {
-    id: 3,
-    company: "StartupXYZ",
-    role: "Frontend Developer",
-    period: "2019 - 2020",
-    description: "Developed customer-facing features and improved UI/UX for the product.",
-    technologies: ["React", "Redux", "Tailwind CSS", "Firebase"],
-  },
-  {
-    id: 4,
-    company: "Freelance",
-    role: "Freelance Developer",
-    period: "2018 - 2019",
-    description: "Delivered web projects for small businesses and startups.",
-    technologies: ["HTML", "CSS", "JavaScript", "WordPress"],
-  },
+    company: "UPN Veteran Jawa Timur",
+    role: "Software Engineer Internship",
+    period: "Jan 2020 - Aug 2020",
+    description: "Built custom web solutions for internal website of computer science faculty.",
+    technologies: ["Laravel", "MySql", "React"],
+  }
 ];
 
 export const testimonials = [
@@ -282,8 +284,8 @@ export const mediumArticles = [
 ];
 
 export const contactInfo = {
-  email: "hello@khoironi.dev",
-  phone: "+62 812 3456 7890",
+  email: "onimaksut01@gmail.com",
+  phone: "+62 881 9332 467",
   location: "Jakarta, Indonesia",
   availability: "Usually responds within 24 hours",
 };

@@ -3,7 +3,7 @@
 import { contactInfo, socialLinks } from "@/constant/portfolio";
 import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaEnvelope, FaMapMarkerAlt, FaPhone, FaPaperPlane } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt, FaPhone, FaPaperPlane, FaMedium } from "react-icons/fa";
 import { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -231,7 +231,7 @@ const Contact = () => {
               
               <div className="flex gap-4">
                 <a
-                  href="https://github.com/khoironi"
+                  href="https://github.com/personne01"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
@@ -243,7 +243,7 @@ const Contact = () => {
                   }`} />
                 </a>
                 <a
-                  href="https://linkedin.com/in/khoironi"
+                  href="https://www.linkedin.com/in/m-khoironi-14b9221b0/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
@@ -255,26 +255,14 @@ const Contact = () => {
                   }`} />
                 </a>
                 <a
-                  href="https://twitter.com/khoironi"
+                  href="https://medium.com/@onimaksut01"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
                     isDark ? "bg-white/10 hover:bg-blue-600/30" : "bg-gray-100 hover:bg-gray-200"
                   }`}
                 >
-                  <FaTwitter className={`w-5 h-5 ${
-                    isDark ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-black"
-                  }`} />
-                </a>
-                <a
-                  href="https://instagram.com/khoironi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
-                    isDark ? "bg-white/10 hover:bg-blue-600/30" : "bg-gray-100 hover:bg-gray-200"
-                  }`}
-                >
-                  <FaInstagram className={`w-5 h-5 ${
+                  <FaMedium className={`w-5 h-5 ${
                     isDark ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-black"
                   }`} />
                 </a>

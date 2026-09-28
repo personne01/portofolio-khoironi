@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 
 type Theme = "dark" | "light";
 
@@ -9,32 +16,72 @@ interface ThemeContextType {
   toggleTheme: () => void;
 }
 
+const STORAGE_KEY = "theme";
+const THEME_CHANGE_EVENT = "theme-change";
+const LIGHT_MEDIA_QUERY = "(prefers-color-scheme: light)";
+
+const isTheme = (value: unknown): value is Theme =>
+  value === "dark" || value === "light";
+
+const readStoredTheme = (): Theme | null => {
+  const stored = window.localStorage.getItem(STORAGE_KEY);
+  return isTheme(stored) ? stored : null;
+};
+
+const getSystemTheme = (): Theme =>
+  window.matchMedia(LIGHT_MEDIA_QUERY).matches ? "light" : "dark";
+
+const getThemeSnapshot = (): Theme => readStoredTheme() ?? getSystemTheme();
+
+const getServerThemeSnapshot = (): Theme => "dark";
+
+const subscribeToTheme = (onStoreChange: () => void) => {
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener(THEME_CHANGE_EVENT, onStoreChange);
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener(THEME_CHANGE_EVENT, onStoreChange);
+  };
+};
+
+const subscribeToHydration = () => () => {};
+
+const getHydratedSnapshot = () => true;
+
+const getServerHydratedSnapshot = () => false;
+
+const writeStoredTheme = (theme: Theme) => {
+  window.localStorage.setItem(STORAGE_KEY, theme);
+  window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
+};
+
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
+  const theme = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot
+  );
+  const hydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getHydratedSnapshot,
+    getServerHydratedSnapshot
+  );
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
-      setTheme("light");
+    if (!hydrated) {
+      return;
     }
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (mounted) {
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("theme", theme);
+    document.documentElement.setAttribute("data-theme", theme);
+    if (readStoredTheme() === null) {
+      writeStoredTheme(theme);
     }
-  }, [theme, mounted]);
+  }, [theme, hydrated]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
+  const toggleTheme = useCallback(() => {
+    writeStoredTheme(theme === "dark" ? "light" : "dark");
+  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

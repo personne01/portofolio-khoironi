@@ -1,14 +1,11 @@
 "use client";
 
-import { personalInfo, skills } from "@/constant/portfolio";
+import { heroStats, personalInfo, skills } from "@/constant/portfolio";
 import { motion } from "framer-motion";
 import { FaCode, FaServer, FaDatabase } from "react-icons/fa";
 import { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 
-const stats = [
-  { id: 1, value: "5+", label: "Years Experience" },
-];
 
 const categories = [
   { id: "all", label: "All" },
@@ -41,7 +38,7 @@ const About = () => {
             About <span className="text-blue-400">Me</span>
           </h2>
           <p className={isDark ? "text-gray-400" : "text-gray-600"}>
-            I&apos;m a passionate {personalInfo.title} with {stats[0].value} years of experience 
+            I&apos;m a passionate {personalInfo.title} with {heroStats[0].value} years of experience 
             building digital products that help businesses grow.
           </p>
         </motion.div>
@@ -59,17 +56,18 @@ const About = () => {
                 ? "bg-white/5 border-white/10" 
                 : "bg-white border-gray-200"
             }`}>
-              <h3 className={`text-2xl font-bold mb-4 ${isDark ? "text-white" : "text-[var(--foreground)]"}`}>My Story</h3>
+              {/* <h3 className={`text-2xl font-bold mb-4 ${isDark ? "text-white" : "text-[var(--foreground)]"}`}>My Story</h3> */}
               <p className={isDark ? "text-gray-300" : "text-gray-700"}>
-                I began my journey in software development back in 2018, starting with HTML, CSS, 
-                and JavaScript. Over the years, I&apos;ve worked with various clients from startups to 
-                established companies, helping them transform their ideas into reality.
+                I started my journey in software engineering by simply being curious about how things work behind the screen. 
+                Since then, I’ve been constantly learning and exploring different areas of development—from backend engineering with Java and Spring Boot, 
+                to frontend development, databases, APIs, cloud, and everything in between. Every project has been an opportunity to learn something new, solve real problems, and grow as an engineer.
+                Over the years, I’ve had the opportunity to work on real-world systems, integrate multiple services, solve production challenges, 
+                and collaborate with different teams to deliver reliable solutions.
               </p>
               <p className={`${isDark ? "text-gray-300" : "text-gray-700"} mt-4`}>
-                My expertise spans across frontend and backend development, with a strong focus on 
-                building scalable web applications using modern technologies like Next.js, React, 
-                and Node.js. I believe in writing clean, maintainable code and delivering projects 
-                on time.
+                Today, I see software engineering as more than just writing code. It’s about understanding problems, designing practical solutions, 
+                and continuously improving how things work. I enjoy exploring new technologies, tackling challenging technical problems, 
+                and turning complex requirements into simple, maintainable systems. My goal is to keep growing as an engineer while building products that create meaningful impact.
               </p>
             </div>
 
@@ -79,18 +77,18 @@ const About = () => {
                   ? "bg-white/5 border-white/10" 
                   : "bg-white border-gray-200"
               }`}>
-                <FaCode className="w-8 h-8 mx-auto mb-2 text-blue-400" />
-                <div className={isDark ? "text-white" : "text-[var(--foreground)]"}>95%</div>
-                <div className={isDark ? "text-gray-400" : "text-gray-600"}>Frontend</div>
+                <FaServer className="w-8 h-8 mx-auto mb-2 text-blue-400" />
+                <div className={isDark ? "text-white" : "text-[var(--foreground)]"}>85%</div>
+                <div className={isDark ? "text-gray-400" : "text-gray-600"}>Backend</div>
               </div>
               <div className={`rounded-xl p-4 border text-center ${
                 isDark 
                   ? "bg-white/5 border-white/10" 
                   : "bg-white border-gray-200"
               }`}>
-                <FaServer className="w-8 h-8 mx-auto mb-2 text-blue-400" />
-                <div className={isDark ? "text-white" : "text-[var(--foreground)]"}>85%</div>
-                <div className={isDark ? "text-gray-400" : "text-gray-600"}>Backend</div>
+                <FaCode className="w-8 h-8 mx-auto mb-2 text-blue-400" />
+                <div className={isDark ? "text-white" : "text-[var(--foreground)]"}>95%</div>
+                <div className={isDark ? "text-gray-400" : "text-gray-600"}>Frontend</div>
               </div>
               <div className={`rounded-xl p-4 border text-center ${
                 isDark 
