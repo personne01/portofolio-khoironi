@@ -1,6 +1,10 @@
 "use client";
 
-import { navLinks, personalInfo } from "@/constant/portfolio";
+import {
+  navLinks as navLinksDefault,
+  personalInfo as personalInfoDefault,
+} from "@/constant/portfolio";
+import type { NavLinkDto, PersonalInfoDto } from "@/lib/dto";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { BiDownload } from "react-icons/bi";
@@ -11,9 +15,15 @@ import { useTheme } from "@/context/ThemeContext";
 
 type NavProps = {
   openNav: () => void;
+  navLinks?: NavLinkDto[];
+  personalInfo?: PersonalInfoDto;
 };
 
-const Nav = ({ openNav }: NavProps) => {
+const Nav = ({
+  openNav,
+  navLinks = navLinksDefault,
+  personalInfo = personalInfoDefault,
+}: NavProps) => {
   const [navBg, setNavBg] = useState(false);
   const { theme } = useTheme();
 
@@ -28,7 +38,10 @@ const Nav = ({ openNav }: NavProps) => {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    url: string,
+  ) => {
     e.preventDefault();
     const element = document.querySelector(url);
     if (element) {
@@ -47,14 +60,20 @@ const Nav = ({ openNav }: NavProps) => {
     >
       <div className="flex items-center h-full justify-between w-[90%] mx-auto">
         <Link href="/" className="flex items-center space-x-2">
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-col ${
-            theme === "dark" ? "bg-white" : "bg-[var(--foreground)]"
-          }`}>
-            <FaCode className={`w-5 h-5 ${theme === "dark" ? "text-black" : "text-white]"}`} />
+          <div
+            className={`w-10 h-10 rounded-full flex items-center justify-center flex-col ${
+              theme === "dark" ? "bg-white" : "bg-[var(--foreground)]"
+            }`}
+          >
+            <FaCode
+              className={`w-5 h-5 ${theme === "dark" ? "text-black" : "text-white]"}`}
+            />
           </div>
-          <div className={`text-x1 hidden sm:block md:text-2xl font-bold ${
-            theme === "dark" ? "text-white" : "text-[var(--foreground)]"
-          }`}>
+          <div
+            className={`text-x1 hidden sm:block md:text-2xl font-bold ${
+              theme === "dark" ? "text-white" : "text-[var(--foreground)]"
+            }`}
+          >
             {personalInfo.name}
           </div>
         </Link>
@@ -88,9 +107,11 @@ const Nav = ({ openNav }: NavProps) => {
               theme === "dark" ? "bg-white/10" : "bg-[var(--foreground)]/10"
             }`}
           >
-            <HiBars3BottomRight className={`w-6 h-6 cursor-pointer ${
-              theme === "dark" ? "text-white" : "text-[var(--foreground)]"
-            }`} />
+            <HiBars3BottomRight
+              className={`w-6 h-6 cursor-pointer ${
+                theme === "dark" ? "text-white" : "text-[var(--foreground)]"
+              }`}
+            />
           </button>
         </div>
       </div>

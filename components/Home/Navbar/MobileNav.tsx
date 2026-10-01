@@ -1,6 +1,10 @@
 "use client";
 
-import { navLinks, personalInfo } from "@/constant/portfolio";
+import {
+  navLinks as navLinksDefault,
+  personalInfo as personalInfoDefault,
+} from "@/constant/portfolio";
+import type { NavLinkDto, PersonalInfoDto } from "@/lib/dto";
 import Link from "next/link";
 import React from "react";
 import { CgClose } from "react-icons/cg";
@@ -10,9 +14,16 @@ import { useTheme } from "@/context/ThemeContext";
 type NavProps = {
   showNav: boolean;
   closeNav: () => void;
+  navLinks?: NavLinkDto[];
+  personalInfo?: PersonalInfoDto;
 };
 
-const MobileNav = ({ closeNav, showNav }: NavProps) => {
+const MobileNav = ({
+  closeNav,
+  showNav,
+  navLinks = navLinksDefault,
+  personalInfo = personalInfoDefault,
+}: NavProps) => {
   const navOpen = showNav ? "translate-x-0" : "translate-x-[100%]";
   const { theme } = useTheme();
   const isDark = theme === "dark";
@@ -26,8 +37,8 @@ const MobileNav = ({ closeNav, showNav }: NavProps) => {
       <div
         className={`${navOpen} fixed justify-center flex flex-col h-full transform transition-all duration-500
         delay-300 w-[80%] sm:w-[60%] space-y-6 z-[10050] right-0 border-l ${
-          isDark 
-            ? "bg-[#0d0d1f] text-white border-white/10" 
+          isDark
+            ? "bg-[#0d0d1f] text-white border-white/10"
             : "bg-white text-gray-800 border-gray-200"
         }`}
       >
@@ -47,12 +58,26 @@ const MobileNav = ({ closeNav, showNav }: NavProps) => {
         })}
 
         <div className="flex items-center space-x-2 ml-12 mt-8">
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-            isDark ? "bg-white" : "bg-gray-800"
-          }`}>
-            <span className={isDark ? "text-black font-bold" : "text-white font-bold"}>{personalInfo.name.charAt(0)}</span>
+          <div
+            className={`w-10 h-10 rounded-full flex items-center justify-center ${
+              isDark ? "bg-white" : "bg-gray-800"
+            }`}
+          >
+            <span
+              className={
+                isDark ? "text-black font-bold" : "text-white font-bold"
+              }
+            >
+              {personalInfo.name.charAt(0)}
+            </span>
           </div>
-          <span className={isDark ? "text-white font-bold" : "text-gray-800 font-bold"}>{personalInfo.name}</span>
+          <span
+            className={
+              isDark ? "text-white font-bold" : "text-gray-800 font-bold"
+            }
+          >
+            {personalInfo.name}
+          </span>
         </div>
 
         <div className="ml-12 mt-4">

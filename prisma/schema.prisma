@@ -1,0 +1,272 @@
+// Prisma schema for the portfolio public-content database.
+//
+// Design rules applied:
+//   - Every table carries created_at / updated_at.
+//   - NOT NULL only where the data is genuinely mandatory; end_date and
+//     location are nullable because the real content allows "Present" and
+//     omits location entirely.
+//   - No enums: every candidate ("available", "is_published") has a single
+//     observed value today, so an enum would encode speculation.
+//   - Tables/columns are snake_case via @map / @@map to match PostgreSQL
+//     convention rather than Prisma's PascalCase default.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Admin account backing the /admin dashboard. Passwords are hashed with
+/// crypto.scrypt (random salt per row); never stored in plaintext.
+model AdminUser {
+  id           Int            @id @default(autoincrement())
+  username     String         @unique @map("username")
+  passwordHash String         @map("password_hash")
+  passwordSalt String         @map("password_salt")
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+  sessions     AdminSession[]
+
+  @@map("admin_users")
+}
+
+/// Server-side admin session. Only the SHA-256 hash of the bearer token is
+/// stored, so a leaked row cannot be replayed. Expiry is enforced at lookup.
+model AdminSession {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @map("user_id")
+  user      AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique @map("token_hash")
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz(3)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([userId])
+  @@map("admin_sessions")
+}
+
+/// Singleton row (id = 1) holding the identity shown across the site.
+model Profile {
+  id                 Int      @id @default(1)
+  name               String   @map("name")
+  fullName           String   @map("full_name")
+  title              String   @map("title")
+  subtitle           String   @map("subtitle")
+  email              String   @map("email")
+  location           String   @map("location")
+  resumeUrl          String   @map("resume_url")
+  photoUrl           String   @map("photo_url")
+  availabilityStatus String   @map("availability_status")
+  availabilityText   String   @map("availability_text")
+  /// Backs the "Years Experience" hero stat, which is derived at render time.
+  careerStartDate    DateTime @map("career_start_date") @db.Date
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("profiles")
+}
+
+model NavLink {
+  id        Int      @id @default(autoincrement())
+  url       String   @map("url")
+  label     String   @map("label")
+  sortOrder Int      @map("sort_order")
+  isVisible Boolean  @default(true) @map("is_visible")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(3)
+
+  @@index([sortOrder])
+  @@map("nav_links")
+}
+
+model SocialLink {
+  id        Int      @id @default(autoincrement())
+  name      String   @map("name")
+  url       String   @map("url")
+  icon      String   @map("icon")
+  sortOrder Int      @map("sort_order")
+  isVisible Boolean  @default(true) @map("is_visible")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(3)
+
+  @@index([sortOrder])
+  @@map("social_links")
+}
+
+model SkillCategory {
+  id        Int      @id @default(autoincrement())
+  /// Matches the filter keys hardcoded in components/Home/About/About.tsx.
+  slug      String   @unique @map("slug")
+  label     String   @map("label")
+  sortOrder Int      @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  skills    Skill[]
+
+  @@index([sortOrder])
+  @@map("skill_categories")
+}
+
+model Skill {
+  id         Int           @id @default(autoincrement())
+  name       String        @map("name")
+  level      Int           @map("level")
+  sortOrder  Int           @map("sort_order")
+  categoryId Int           @map("category_id")
+  category   SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdAt  DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt  DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt  DateTime?     @map("deleted_at") @db.Timestamptz(3)
+
+  @@unique([categoryId, name])
+  @@index([categoryId, sortOrder])
+  @@map("skills")
+}
+
+model ProjectCategory {
+  id        Int       @id @default(autoincrement())
+  slug      String    @unique @map("slug")
+  label     String    @map("label")
+  sortOrder Int       @map("sort_order")
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+  projects  Project[]
+
+  @@index([sortOrder])
+  @@map("project_categories")
+}
+
+model Project {
+  id           Int                 @id @default(autoincrement())
+  title        String              @map("title")
+  slug         String              @unique @map("slug")
+  description  String              @map("description")
+  liveUrl      String              @map("live_url")
+  githubUrl    String              @map("github_url")
+  /// Source data nests these as `metrics: { value, label }`; flattened because
+  /// each half is queried and validated independently.
+  metricValue  String              @map("metric_value")
+  metricLabel  String              @map("metric_label")
+  sortOrder    Int                 @map("sort_order")
+  isPublished  Boolean             @default(true) @map("is_published")
+  categoryId   Int                 @map("category_id")
+  category     ProjectCategory     @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  technologies ProjectTechnology[]
+  createdAt    DateTime            @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime            @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt    DateTime?           @map("deleted_at") @db.Timestamptz(3)
+
+  @@index([categoryId, sortOrder])
+  @@index([isPublished, sortOrder])
+  @@map("projects")
+}
+
+/// Resolves the source `tags: string[]` into a real many-to-many relation,
+/// so a technology can later be reused across projects.
+model ProjectTechnology {
+  projectId Int     @map("project_id")
+  name      String  @map("name")
+  sortOrder Int     @map("sort_order")
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, name])
+  @@index([projectId, sortOrder])
+  @@map("project_technologies")
+}
+
+model Service {
+  id           Int              @id @default(autoincrement())
+  title        String           @map("title")
+  description  String           @map("description")
+  /// Kept as text: values mix one-off and per-hour units ("$500" / "$100/hr").
+  priceDisplay String           @map("price_display")
+  iconKey      String           @map("icon_key")
+  sortOrder    Int              @map("sort_order")
+  features     ServiceFeature[]
+  createdAt    DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([sortOrder])
+  @@map("services")
+}
+
+model ServiceFeature {
+  serviceId Int     @map("service_id")
+  feature   String  @map("feature")
+  sortOrder Int     @map("sort_order")
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@id([serviceId, feature])
+  @@index([serviceId, sortOrder])
+  @@map("service_features")
+}
+
+model Experience {
+  id           Int                   @id @default(autoincrement())
+  company      String                @map("company")
+  role         String                @map("role")
+  location     String?
+  /// Source stores a human "Mar 2023 - Present" string; split into real dates
+  /// so "Present" can be represented as a NULL end_date.
+  startDate    DateTime              @map("start_date") @db.Date
+  endDate      DateTime?             @map("end_date") @db.Date
+  description  String                @map("description")
+  sortOrder    Int                   @map("sort_order")
+  isPublished  Boolean               @default(true) @map("is_published")
+  technologies ExperienceTechnology[]
+  createdAt    DateTime              @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime              @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt    DateTime?             @map("deleted_at") @db.Timestamptz(3)
+
+  @@index([isPublished, sortOrder])
+  @@map("experiences")
+}
+
+model ExperienceTechnology {
+  experienceId Int        @map("experience_id")
+  name         String     @map("name")
+  sortOrder    Int        @map("sort_order")
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+
+  @@id([experienceId, name])
+  @@index([experienceId, sortOrder])
+  @@map("experience_technologies")
+}
+
+model Article {
+  id              Int      @id @default(autoincrement())
+  title           String   @map("title")
+  description     String   @map("description")
+  url             String   @map("url")
+  /// Source stores "Oct 5, 2025" plus "2 min read"; both are stored typed so
+  /// sorting and formatting no longer depend on the runtime locale.
+  publishedAt     DateTime @map("published_at") @db.Date
+  readTimeMinutes Int      @map("read_time_minutes")
+  category        String   @map("category")
+  sortOrder       Int      @map("sort_order")
+  isPublished     Boolean  @default(true) @map("is_published")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt       DateTime? @map("deleted_at") @db.Timestamptz(3)
+
+  @@index([isPublished, publishedAt])
+  @@index([category])
+  @@map("articles")
+}
+
+/// Singleton row (id = 1) for the contact block.
+model ContactInfo {
+  id               Int      @id @default(1)
+  email            String   @map("email")
+  phone            String   @map("phone")
+  location         String   @map("location")
+  availabilityText String   @map("availability_text")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("contact_infos")
+}

@@ -1,14 +1,31 @@
 "use client";
 
-import { personalInfo, heroStats } from "@/constant/portfolio";
+import {
+  heroStats as heroStatsDefault,
+  personalInfo as personalInfoDefault,
+} from "@/constant/portfolio";
+import type { HeroStatDto, PersonalInfoDto } from "@/lib/dto";
 import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
-import { FaArrowRight, FaDownload, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
+import {
+  FaArrowRight,
+  FaDownload,
+  FaMapMarkerAlt,
+  FaEnvelope,
+} from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "@/context/ThemeContext";
 
-const Hero = () => {
+type HeroProps = {
+  personalInfo?: PersonalInfoDto;
+  heroStats?: HeroStatDto[];
+};
+
+const Hero = ({
+  personalInfo = personalInfoDefault,
+  heroStats = heroStatsDefault,
+}: HeroProps) => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
@@ -34,24 +51,35 @@ const Hero = () => {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/20 border border-blue-600/30 mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-sm text-blue-300">{personalInfo.availabilityText}</span>
+              <span className="text-sm text-blue-300">
+                {personalInfo.availabilityText}
+              </span>
             </motion.div>
 
-            <h1 className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-4 ${isDark ? "text-white" : "text-[var(--foreground)]"
-              }`}>
+            <h1
+              className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-4 ${
+                isDark ? "text-white" : "text-[var(--foreground)]"
+              }`}
+            >
               Hi, I&apos;m{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
                 {personalInfo.name}
               </span>
             </h1>
 
-            <p className={`text-xl md:text-2xl mb-6 ${isDark ? "text-gray-300" : "text-gray-700"
-              }`}>
+            <p
+              className={`text-xl md:text-2xl mb-6 ${
+                isDark ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
               {personalInfo.title}
             </p>
 
-            <p className={`text-lg mb-8 max-w-xl ${isDark ? "text-gray-400" : "text-gray-600"
-              }`}>
+            <p
+              className={`text-lg mb-8 max-w-xl ${
+                isDark ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
               {personalInfo.subtitle}
             </p>
 
@@ -70,14 +98,21 @@ const Hero = () => {
               </Link>
             </div>
 
-            <div className={`flex items-center gap-4 justify-center lg:justify-start ${isDark ? "text-gray-400" : "text-gray-500"
-              }`}>
+            <div
+              className={`flex items-center gap-4 justify-center lg:justify-start ${
+                isDark ? "text-gray-400" : "text-gray-500"
+              }`}
+            >
               <div className="flex items-center gap-2">
                 <FaMapMarkerAlt className="text-sm" />
                 <span>{personalInfo.location}</span>
               </div>
-              <Link href={`mailto:${personalInfo.email}`} className={`flex items-center gap-2 hover:${isDark ? "text-white" : "text-[var(--foreground)]"
-                } transition-colors`}>
+              <Link
+                href={`mailto:${personalInfo.email}`}
+                className={`flex items-center gap-2 hover:${
+                  isDark ? "text-white" : "text-[var(--foreground)]"
+                } transition-colors`}
+              >
                 <FaEnvelope className="text-sm" />
                 <span>{personalInfo.email}</span>
               </Link>
@@ -92,10 +127,13 @@ const Hero = () => {
           >
             <div className="relative">
               <div className="w-72 h-72 md:w-96 md:h-96 rounded-full bg-gradient-to-br from-blue-600/30 to-purple-600/30 flex items-center justify-center">
-                <div className={`relative overflow-hidden w-64 h-64 md:w-88 md:h-88 rounded-full border flex items-center justify-center ${isDark
-                    ? "bg-[var(--background)] border-white/10"
-                    : "bg-white border-gray-200"
-                  }`}>
+                <div
+                  className={`relative overflow-hidden w-64 h-64 md:w-88 md:h-88 rounded-full border flex items-center justify-center ${
+                    isDark
+                      ? "bg-[var(--background)] border-white/10"
+                      : "bg-white border-gray-200"
+                  }`}
+                >
                   <Image
                     src="/photos/khoironi-photo.jpeg"
                     alt={`Portrait of ${personalInfo.name}, ${personalInfo.title}`}
@@ -119,13 +157,27 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="flex flex-wrap justify-center gap-8 md:gap-16 mt-16"
         >
+          {heroStats.length === 0 && (
+            <p
+              className={`col-span-full text-center py-12 ${
+                isDark ? "text-gray-400" : "text-gray-500"
+              }`}
+            >
+              No stats available
+            </p>
+          )}
           {heroStats.map((stat) => (
             <div key={stat.id} className="text-center">
-              <div className={`text-3xl md:text-4xl font-bold mb-1 ${isDark ? "text-white" : "text-[var(--foreground)]"
-                }`}>
+              <div
+                className={`text-3xl md:text-4xl font-bold mb-1 ${
+                  isDark ? "text-white" : "text-[var(--foreground)]"
+                }`}
+              >
                 {stat.value}
               </div>
-              <div className={isDark ? "text-gray-400" : "text-gray-500"}>{stat.label}</div>
+              <div className={isDark ? "text-gray-400" : "text-gray-500"}>
+                {stat.label}
+              </div>
             </div>
           ))}
         </motion.div>

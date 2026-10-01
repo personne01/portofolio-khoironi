@@ -6,9 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "admin:create": "tsx scripts/admin-create.ts"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
     "@react-email/components": "^1.0.12",
     "@react-email/tailwind": "^2.0.7",
     "clsx": "^2.1.1",
@@ -16,22 +20,30 @@
     "icons": "^1.0.0",
     "lucide-react": "^1.9.0",
     "next": "16.1.4",
+    "pg": "^8.23.0",
+    "prisma": "^7.10.0",
     "react": "^19.2.3",
     "react-dom": "19.2.3",
     "react-email": "^6.0.0",
     "react-icons": "^5.5.0",
     "resend": "^6.12.2",
-    "tailwind-merge": "^3.5.0"
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^3.5.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^24.19.0",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.4",
+    "prettier": "^3.9.9",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "vitest": "^5.0.2"
   }
 }
