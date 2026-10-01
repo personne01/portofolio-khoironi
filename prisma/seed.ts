@@ -2,7 +2,11 @@
  * Seeds the database from the portfolio's real content in
  * `constant/portfolio.ts`.
  *
- * Run with:  npx prisma db seed
+ * Run with:  ALLOW_DESTRUCTIVE_SEED=1 npx prisma db seed
+ *
+ * DESTRUCTIVE: this truncates all 14 content tables, including everything the
+ * admin CMS writes. `seed-guard.ts` refuses to run unless the environment opts
+ * in explicitly and the target host is not a production database.
  *
  * The seed is idempotent: it clears the content tables in foreign-key-safe
  * order and re-inserts, so re-running it always converges on the same state.
@@ -14,6 +18,8 @@
 import "dotenv/config";
 
 import { PrismaPg } from "@prisma/adapter-pg";
+
+import { assertDestructiveSeedAllowed } from "./seed-guard";
 
 import {
   contactInfo,
@@ -166,15 +172,22 @@ const PROFILE_PHOTO_URL = "/photos/khoironi-photo.jpeg";
 const CAREER_START_DATE = utcDate(2022, 10);
 
 async function main(): Promise<void> {
-  const connectionString = process.env["DATABASE_URL"];
+  // Refused before any client is constructed, so a rejected run opens no
+  // connection and deletes nothing. Prints the host, never the DSN, which
+  // carries an inline password.
+  const target = assertDestructiveSeedAllowed({
+    DATABASE_URL: process.env["DATABASE_URL"],
+    NODE_ENV: process.env["NODE_ENV"],
+    ALLOW_DESTRUCTIVE_SEED: process.env["ALLOW_DESTRUCTIVE_SEED"],
+  });
 
-  if (connectionString === undefined || connectionString === "") {
-    throw new Error(
-      "DATABASE_URL is not set. Copy .env.example to .env first.",
-    );
-  }
+  console.log(
+    `Seeding "${target.host}": truncating all content tables, then re-inserting.`,
+  );
 
-  const db = new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
+  const db = new PrismaClient({
+    adapter: new PrismaPg({ connectionString: target.connectionString }),
+  });
 
   try {
     // Child rows first so the ON DELETE RESTRICT constraints never fire.

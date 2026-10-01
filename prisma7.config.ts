@@ -10,6 +10,10 @@ export default defineConfig({
     seed: "tsx prisma/seed.ts",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    // Migrations need an unpooled connection: a transaction-mode pooler cannot
+    // run DDL, and a migration that blocks on it hangs instead of failing.
+    // Falls back to DATABASE_URL so a host that only sets one variable (a local
+    // machine, or `prisma generate` during the build) still works.
+    url: process.env["DIRECT_URL"] ?? process.env["DATABASE_URL"],
   },
 });
